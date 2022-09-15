@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{%  block content %}
+    {% if genre %}
+        <h3>All available books in the genre of {{ genre }}</h3>
+    {% elif author %}
+        <h3>All available books by {{ author }}</h3>
+    {% endif %}
+<div>
+    <ul>
+    {% if paginator %}
+        {% for book in page_books %}
+             <li><a href="{% url 'catalog:book_detail' pk=book.id %}">"{{ book.name }}"</a>
+                 <p>{{ book.author }} ({{ book.author.date_of_birth }}-{{ book.author.date_of_death }}). Genre {{ book.genre }}</p>
+                 <p>price - {{ book.price }}$</p></li>
+        {% endfor %}
+
+    {% endif %}
+    </ul>
+</div>
+<p>
+    {% if page_books.has_previous %}
+        <a href="?page={{page_books.previous_page_number}}">previous</a>
+    {% endif %}
+    {% for i in paginator.page_range %}
+        <a href="?page={{ i }}">{{ i }}</a>
+    {% endfor %}
+    {% if page_books.has_next %}
+        <a href="?page={{page_books.next_page_number}}">next</a>
+    {% endif %}
+</p>
+{%  endblock %}
