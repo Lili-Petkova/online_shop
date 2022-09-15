@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{%  block content %}
+    {% if author_list %}
+        <h3>Authors</h3>
+        <ul>
+        {% for author in author_list %}
+            <li><a href="{% url 'catalog:books_of_author' author_pk=author.pk %}">{{ author.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
