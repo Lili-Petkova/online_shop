@@ -24,9 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "0.0.0.0",
+    '127.0.0.1',
+]
+
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -39,12 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_results',
+    'django_celery_beat',
 
     'catalog',
     'user',
     'cart',
     'order',
-    'widget_tweaks'
+    'widget_tweaks',
+
 ]
 
 MIDDLEWARE = [
@@ -84,12 +95,16 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
-
+# 'ATOMIC_REQUESTS': True
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -142,6 +157,7 @@ MEDIA_URL = "images/"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -153,6 +169,11 @@ CACHES = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'mailhog'
+EMAIL_PORT = '25'
+EMAIL_HOST_USER = "admin"
+EMAIL_HOST_PASSWORD = "Qwerty12345"
+EMAIL_USE_SSL = False
 
 CELERY_TIMEZONE = 'UTC'
 CELERY_TASK_TRACK_STARTED = True

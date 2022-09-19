@@ -15,5 +15,8 @@
     {% csrf_token %}
     <input type="submit" value="Add to cart">
 </form>
+    {% if deficit %}
+        <h5>{{ deficit }}</h5>
+    {% endif %}
 
 {% endblock %}
