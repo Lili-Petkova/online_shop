@@ -9,7 +9,7 @@ User = get_user_model()
 
 class Order(models.Model):
     status_choices = (
-        ('created', 'Created'),
+        ('failed', 'Failed'),
         ('processed', 'Processed'),
         ('completed', 'Completed'),
     )
@@ -18,12 +18,11 @@ class Order(models.Model):
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
     email = models.EmailField()
-    address = models.CharField(max_length=250)
+    address = models.CharField(max_length=50)
     postal_code = models.CharField(max_length=20)
     city = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=10, choices=status_choices, default='created')
+    status = models.CharField(max_length=10, choices=status_choices, default='processed')
 
     class Meta:
         ordering = ('created',)

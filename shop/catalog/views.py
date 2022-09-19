@@ -28,8 +28,7 @@ def contact(request):
             email = form.cleaned_data['email']
             text = form.cleaned_data['text']
             data['form_is_valid'] = True
-            #send_mail_contact.delay(text, email) селери не работает, я пока не поняла почему
-            # AttributeError: 'ChannelPromise' object has no attribute '__value__'
+            send_mail_contact.delay(text, email)
 
             mes = messages.add_message(request,  messages.SUCCESS, 'Message sent')
             context = {'mes': mes}
