@@ -8,10 +8,11 @@ WORKDIR /app
 
 COPY ./warehouse/ /app
 
-COPY ./docker/warehouse/runserver.sh /
+#COPY ./docker/warehouse/runserver.sh /
 
-RUN chmod +x /runserver.sh
+#RUN chmod +x /runserver.sh
 
 EXPOSE 8001
 
 CMD ['python', 'manage.py', 'runserver', '0.0.0.0:8001']
+#CMD ["python", "-Wd", "manage.py", "runserver"]

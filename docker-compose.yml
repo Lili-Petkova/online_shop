@@ -27,8 +27,8 @@ services:
       DB_PORT: "5432"
       DJANGO_ENV: "dev"
     restart: on-failure
-    command:
-      - sh /runserver.sh
+#    command:
+#      - sh /runserver.sh
 
   warehouse:
     container_name: warehouse
@@ -55,8 +55,8 @@ services:
       DB_HOST: "db_warehouse"
       DB_PORT: "5432"
     restart: on-failure
-    command:
-      - sh /runserver.sh
+#    command:
+#      - sh /runserver.sh
 
   db_shop:
     container_name: db_shop
@@ -99,7 +99,6 @@ services:
       - entry
     ports:
       - 80:80
-      - 8001:8001
       - 8025:8025
       - 5555:5555
     depends_on:
